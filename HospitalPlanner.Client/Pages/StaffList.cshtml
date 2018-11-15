@@ -1,0 +1,45 @@
+﻿@using HospitalPlanner.Shared
+@page "/stafflist"
+@inject HttpClient Http
+
+<h1>Staff List</h1>
+
+@if (_staff == null)
+{
+<h3>loading ...</h3>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Days per week</th>
+            <th>Role</th>
+            <th>Preference (Early/Late/Night)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in _staff)
+        {
+        <tr>
+            <td><b>@s.Name</b></td>
+            <td class="bg-info">@s.DaysPerWeek</td>
+            <td>@s.Role.ToRole()</td>
+            <td>(@s.Preference.WorkingEarly/@s.Preference.WorkingLate/@s.Preference.WorkingNights)</td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+
+@functions
+{
+    Staff[] _staff;
+
+    protected override async Task OnInitAsync()
+    {
+        _staff = await Http.GetJsonAsync<Staff[]>("api/Staff/GetAllStaff");
+    }
+
+}
