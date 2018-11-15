@@ -13,7 +13,7 @@
         public Staff()
         {
             Role = new Role();
-            //Preference = Preferences.Default;
+            Preference = Preferences.Default;
         }
     }
 }
