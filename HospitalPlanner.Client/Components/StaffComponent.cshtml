@@ -1,0 +1,33 @@
+﻿@using HospitalPlanner.Shared
+
+<!-- playing with bootstrap 4 spacers and colors -->
+<tr>
+    <td class="py-1"><b>@Staff.Name</b></td>
+    <td class="py-1"><p class="pl-5 py-1 m-0 @c">@Staff.DaysPerWeek</p></td>
+    <td class="py-1">@Staff.Role.ToRole()</td>
+    <td class="py-1 pl-5">(@Staff.Preference.WorkingEarly / @Staff.Preference.WorkingLate / @Staff.Preference.WorkingNights)</td>
+</tr>
+
+@functions
+{
+    [Parameter] Staff Staff { get; set; }
+
+    string c = string.Empty;
+
+    protected override async Task OnInitAsync()
+    {
+        switch (Staff.DaysPerWeek)
+        {
+            case 5:
+                break;
+            case 4:
+                c = "text-primary";
+                break;
+            default:
+                c = "text-warning";
+                break;
+        }
+
+        await Task.CompletedTask;
+    }
+}

@@ -7,6 +7,7 @@ namespace HospitalPlanner.Client
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
         }
 
         public void Configure(IBlazorApplicationBuilder app)

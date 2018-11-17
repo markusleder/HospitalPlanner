@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.7.0-preview1-final" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.7.0-preview1-final" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0-preview3-35497" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Components\StaffComponent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\StaffList.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

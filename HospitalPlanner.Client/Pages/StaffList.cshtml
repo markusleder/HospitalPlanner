@@ -22,12 +22,7 @@ else
     <tbody>
         @foreach (var s in _staff)
         {
-        <tr>
-            <td><b>@s.Name</b></td>
-            <td class="bg-info">@s.DaysPerWeek</td>
-            <td>@s.Role.ToRole()</td>
-            <td>(@s.Preference.WorkingEarly/@s.Preference.WorkingLate/@s.Preference.WorkingNights)</td>
-        </tr>
+            <StaffComponent Staff=@s/>
         }
     </tbody>
 </table>

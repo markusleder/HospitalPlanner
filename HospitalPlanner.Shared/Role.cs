@@ -1,4 +1,6 @@
-﻿namespace HospitalPlanner.Shared
+﻿using System.Runtime.Serialization;
+
+namespace HospitalPlanner.Shared
 {
     public enum Role
     {
@@ -16,7 +18,25 @@
     {
         public static string ToRole(this Role role)
         {
-            return role.ToString();
+            switch (role)
+            {
+                case Role.Trainee:
+                    return "Trainee";
+                case Role.Nurse:
+                    return "Nurse";
+                case Role.GraduateNurse:
+                    return "Graduate Nurse";
+                case Role.PhysicianAssistant:
+                    return "Physician Assistant";
+                case Role.Physician:
+                    return "Physician";
+                case Role.SeniorPhysician:
+                    return "Senior Physician";
+                case Role.ChiefPhysician:
+                    return "Chief Physician";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }
