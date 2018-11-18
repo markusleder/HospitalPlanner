@@ -1,25 +1,52 @@
-﻿@using HospitalPlanner.Shared
+﻿@using System.Net
+@using Blazor.Extensions
+@using HospitalPlanner.Client.Services
+@using HospitalPlanner.Shared
 @page "/shiftplan"
 @inject HttpClient Http
 
 <h1>Hospital Shift Plan</h1>
 
-@if (_plan == null)
-{
-<h3>loading ...</h3>
-}
-else
-{
-    <HtmlGrid/>
-}
+<p>Drawing the time/shifts in columns and the staff as lines ... using Canvas blazor extension</p>
+
+<p>@_message</p>
+
+
+<div onclick="@OnClick">
+    <BECanvas ref="@_canvasComponent" width="@Width" height="@Height"></BECanvas>
+</div>
 
 @functions
 {
-    Plan[] _plan;
+    internal readonly int Width = 1800;
+    internal readonly int Height = 500;
+    PlanCanvasDrawing _canvas;
+ #pragma warning disable 649
+    BECanvasComponent _canvasComponent;
+ #pragma warning restore 649
+    string _message = "-";
 
     protected override async Task OnInitAsync()
     {
-        _plan = await Http.GetJsonAsync<Plan[]>("api/ShiftPlan/Get");
+        _message = "initialized";
+
+        await Task.CompletedTask;
     }
 
+    protected override void OnAfterRender()
+    {
+        // get context to draw onto canvas
+        var canvasContext = _canvasComponent.CreateCanvas2d();
+
+        _canvas = new PlanCanvasDrawing(canvasContext, Width, Height);
+        _canvas.DrawPlan();
+        _message = "drawn";
+
+        // StateHasChanged(); // force data binding update ... does not work in this lifecycle event method ...
+    }
+
+    void OnClick(UIMouseEventArgs e)
+    {
+        _message = $"OnClick {e.ClientX}, {e.ClientY}, {e.ScreenX}, {e.ScreenY}";
+    }
 }
